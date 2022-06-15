@@ -3,15 +3,15 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from utils import grafica_1, descriptivo, grafica_2, filtro, tasa_aprobacion_temprana, tasa_perdida, importacion_datos, check_password
+from utils import grafica_1, descriptivo, grafica_2, filtro, tasa_aprobacion_temprana, tasa_perdida, importacion_datos, serie_tiempo, check_password
 
 #autenticación
-password = st.secrets['password'] 
+#password = st.secrets['password']
 key1 = st.secrets['key1']
 key2 = st.secrets['key2']
 
-if check_password() != True:
-    st.stop()
+#if check_password() != True:
+#    st.stop()
     
 #importación de datos
 df = importacion_datos(key1, key2)
@@ -44,9 +44,18 @@ col1, col2 = st.columns(2)
 col1.write(descriptivo(df))
 col2.pyplot(grafica_2(df))
 
-st.subheader(f'Aprobación temprana: {tasa_aprobacion_temprana(df)}')
-st.subheader(f'Tasa de no aprobación: {tasa_perdida(df)}')
-st.write()
+st.subheader(f'Aprobación temprana promedio: {tasa_aprobacion_temprana(df)}')
+
+
+if df['periodo'].nunique() != 1:
+    st.pyplot(serie_tiempo(df, 'aprob'))
+    
+
+st.subheader(f'Tasa de no aprobación promedio: {tasa_perdida(df)}')
+
+if df['periodo'].nunique() != 1:
+    st.pyplot(serie_tiempo(df, 'no_aprob'))
+
 
 #notas al pie de pa´gina
 

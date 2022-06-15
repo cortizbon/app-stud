@@ -105,3 +105,20 @@ def check_password():
         # Password correct.
         return True
 
+def serie_tiempo(df, stat):
+    periodos_unicos = df['periodo'].unique()
+    dic_tasas = {}
+    for periodo in periodos_unicos:
+        filtro = df[df['periodo'] == periodo]
+        dic_tasas[str(periodo)] = filtro[stat].mean()
+    
+    fig, ax = plt.subplots(figsize=(14,8))
+
+    ax.scatter(dic_tasas.keys(), dic_tasas.values(), marker='v')
+    for periodo, valor in dic_tasas.items():
+        ax.text(periodo, valor + 0.003, f'{round(valor*100,2)}%', verticalalignment='center',fontsize=12)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    return fig
+
