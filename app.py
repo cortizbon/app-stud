@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 from utils import grafica_1, descriptivo, grafica_2, filtro, tasa_aprobacion_temprana, tasa_perdida, importacion_datos, serie_tiempo, check_password
 
 #autenticación
-#password = st.secrets['password']
+password = st.secrets['password']
 key1 = st.secrets['key1']
 key2 = st.secrets['key2']
 
-#if check_password() != True:
-#    st.stop()
+if check_password() != True:
+    st.stop()
     
 #importación de datos
 df = importacion_datos(key1, key2)
